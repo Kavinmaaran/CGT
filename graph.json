@@ -1,0 +1,27 @@
+[
+    {
+        "Vertex_1": "1",
+        "Vertex_2": "2",
+        "Weight": "2"
+    },
+    {
+        "Vertex_1": "2",
+        "Vertex_2": "5",
+        "Weight": "2"
+    },
+    {
+        "Vertex_1": "2",
+        "Vertex_2": "3",
+        "Weight": "3"
+    },
+    {
+        "Vertex_1": "3",
+        "Vertex_2": "4",
+        "Weight": "3"
+    },
+    {
+        "Vertex_1": "0",
+        "Vertex_2": "1",
+        "Weight": "4"
+    }
+]
