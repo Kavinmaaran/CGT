@@ -1,5 +1,3 @@
-// Kruskal's algorithm in C++
-
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -12,70 +10,55 @@ fstream mg;
 
 class Graph {
    private:
-  vector<pair<int, edge> > G;  // graph
-  vector<pair<int, edge> > T;  // mst
-  int *parent;
-  int V;  // number of vertices/nodes in graph
+    vector<pair<int, edge> > MG;
+    vector<pair<int, edge> > MST;  
+    int *parent;
+    int vertex;
    public:
-  Graph(int V);
-  void AddWeightedEdge(int u, int v, int w);
-  int find_set(int i);
-  void union_set(int u, int v);
-  void kruskal();
-  void print();
-};
-Graph::Graph(int V) {
-  parent = new int[V];
+    Graph(int vertex) {
+  parent = new int[vertex];
 
-  //i 0 1 2 3 4 5
-  //parent[i] 0 1 2 3 4 5
-  for (int i = 0; i < V; i++)
+  for (int i = 0; i < vertex; i++)
     parent[i] = i;
 
-  G.clear();
-  T.clear();
+  MG.clear();
+  MST.clear();
+  }
+    void AddWeightedEdge(int u, int v, int w){
+  MG.push_back(make_pair(w, edge(u, v)));
 }
-void Graph::AddWeightedEdge(int u, int v, int w) {
-  G.push_back(make_pair(w, edge(u, v)));
-}
-int Graph::find_set(int i) {
-  // If i is the parent of itself
+    int findParent(int i){
   if (i == parent[i])
     return i;
   else
-    // Else if i is not the parent of itself
-    // Then i is not the representative of his set,
-    // so we recursively call Find on its parent
-    return find_set(parent[i]);
+    return findParent(parent[i]);
 }
-
-void Graph::union_set(int u, int v) {
+    void setParent(int u, int v){
   parent[u] = parent[v];
 }
-void Graph::kruskal() {
+    void kruskal() {
   int i, uRep, vRep;
-  sort(G.begin(), G.end());  // increasing weight
-  for (i = 0; i < G.size(); i++) {
-    uRep = find_set(G[i].second.first);
-    vRep = find_set(G[i].second.second);
+  sort(MG.begin(), MG.end());
+  for (i = 0; i < MG.size(); i++) {
+    uRep = findParent(MG[i].second.first);
+    vRep = findParent(MG[i].second.second);
     if (uRep != vRep) {
-      T.push_back(G[i]);  // add to tree
-      union_set(uRep, vRep);
+      MST.push_back(MG[i]);
+      setParent(uRep, vRep);
     }
   }
 }
-void Graph::print() {
-  // mst << "Edge :"
-  //    << " Weight" << endl;
-  for (int i = 0; i < T.size(); i++) {
-    mst << T[i].second.first << "-" << T[i].second.second << "-"
-       << T[i].first;
+    void printGraph(){
+  for (int i = 0; i < MST.size(); i++) {
+    mst << MST[i].second.first << "-" << MST[i].second.second << "-"
+       << MST[i].first;
     mst << endl;
   }
 }
+};
 int main() {
-  mst.open("mst", ios::out);
-  mg.open("mg", ios::out);
+  mst.open("txt/mst", ios::out);
+  mg.open("txt/mg", ios::out);
   int node;
   int ed;
   cout << "Enter number of nodes: ";
@@ -95,7 +78,7 @@ int main() {
     g.AddWeightedEdge(v1, v2, w);
   }
   g.kruskal();
-  g.print();
+  g.printGraph();
   system("python3 net.py");
   return 0;
 }
