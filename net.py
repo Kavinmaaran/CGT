@@ -1,6 +1,7 @@
 import networkx
 import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
+import matplotlib.image as img
+from PIL import Image
 
 G = networkx.Graph()
 
@@ -13,7 +14,7 @@ pos = networkx.spring_layout(G, k=100)
 weight_labels = networkx.get_edge_attributes(G,'weight')
 options = {
   "font_size": 20,
-  "node_size": 1000,
+  "node_size": 1300,
   "node_color": "blue",
   "edge_color": "black",
   "linewidths": 2,
@@ -34,9 +35,9 @@ for line in f:
   G.add_edge(int(line[0]), int(line[1]), weight=int(line[2]))
   pos = networkx.spring_layout(G, k=100)
   weight_labels = networkx.get_edge_attributes(G,'weight')
-  options = {
+  options = {    "font_color":"white",
     "font_size": 20,
-    "node_size": 1000,
+    "node_size": 1300,
     "node_color": "blue",
     "edge_color": "black",
     "linewidths": 2,
@@ -49,7 +50,7 @@ for line in f:
   plt.show(block=False)
   plt.pause(3)
   plt.close()
-image = mpimg.imread("pic/mst.png")
-plt.imshow(image)
+image = Image.open('pic/mst.png')
+image.show()
 G.clear()
 f.close()
