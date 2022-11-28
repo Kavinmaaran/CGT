@@ -5,12 +5,12 @@
 int vertex,edge;
 int weights[max][3];
 
-int swap(int* a, int* b){
+void swap(int* a, int* b){
     int temp=(*b);
     *b=(*a);
     *a=temp;
 }
-int sort(int n){
+void sort(int n){
     for(int i=0;i<n;i++){
         int min=i;
         for(int j=i+1;j<n;j++){
